@@ -21,7 +21,7 @@ class Home extends React.Component {
 
         <div>
           <h2>Список лиг</h2>
-          <p  className="fs-4">
+          <p className="fs-4">
             Беслатный тарифный план дает доступ о данных только 12 лиг.
             Их список приведен чуть ниже. При выборе лиги Вам будет представлен календарь
             матчей текущего сезона. Попытка получить календарь любой другой лиги
@@ -31,7 +31,7 @@ class Home extends React.Component {
             <li className="list-group-item">UEFA Champions League</li>
             <li className="list-group-item">Primeira Liga</li>
             <li className="list-group-item">Premier League</li>
-            <li className="list-group-item" className="list-group-item">Eredivisie</li>
+            <li className="list-group-item">Eredivisie</li>
             <li className="list-group-item">Bundesliga</li>
             <li className="list-group-item">Ligue 1</li>
             <li className="list-group-item">Serie A</li>

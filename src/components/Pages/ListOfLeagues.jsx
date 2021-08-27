@@ -46,15 +46,15 @@ function ListOfLeagues(props) {
         {rows}
       </ul>
     );
-  } else {
-    return (
-      <div className="bg-dark text-danger text-center">
-        <h1>Network Error</h1>
-        <p className="fs-3">Превышено количество обращений к серверу</p>
-        <p className="fs-3">Не более 10 в минуту</p>
-      </div>
-    );
   }
+
+  return (
+    <div className="bg-dark text-danger text-center">
+      <h1>Network Error</h1>
+      <p className="fs-3">Превышено количество обращений к серверу</p>
+      <p className="fs-3">Не более 10 в минуту</p>
+    </div>
+  );
 }
 
 function SearchBar(props) {
@@ -63,11 +63,11 @@ function SearchBar(props) {
   }
 
   return(
-    <form className="mb-4 p-2">
+    <form className="col-md-3 mb-4">
       <label className="form-label fs-3">Поиск по названию</label>
       <input
         className="form-control form-control-lg"
-        type="search"
+        type="text"
         placeholder="Введите название лиги"
         onChange={handleFilterTextChange}
         name="filter"
@@ -82,7 +82,7 @@ function FilterableListOfLeagues() {
   const [leaguesState, setLeaguesState] = useState([]);
   const [errorState, setErrorState] = useState('');
   const [filterText, setFilterText] = useState('');
-  
+
   useEffect(() => {
     if (!leaguesState.length) {
       axios({
@@ -114,7 +114,7 @@ function FilterableListOfLeagues() {
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Список лиг</h1>
       <SearchBar
-        leagues={leaguesState}
+        // leagues={leaguesState}
         filterText={filterText}
         onFilterTextChange={setFilterText}
       />

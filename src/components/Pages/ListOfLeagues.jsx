@@ -7,15 +7,7 @@ import axios from "axios";
 function RowOfLeague(props) {
   const league = props.league;
   return (
-    <Link
-      to={{
-        pathname: "/leagues/calendar",
-        state: {
-          leagueName: league.name,
-          leagueID: league.id
-        }
-      }}
-    >
+    <Link to={`/leagues/${league.id}`}>
       <li className="list-group-item">
         <p className="fs-4">{league.name} / {league.country}</p>
       </li>

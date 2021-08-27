@@ -136,11 +136,11 @@ function MatchSearchBar(props) {
 // Родительский компонент с состоянием
 function FilterableLeagueCalendar(props) {
   const [calendarState, setCalendarState] = useState([]);
+  const [leagueNameState, setLeagueNameState] = useState('');
   const [errorState, setErrorState] = useState('');
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
-  const leagueID = props.location.state.leagueID;
-  const leagueName = props.location.state.leagueName;
+  const leagueID = parseInt(props.match.params.leagueID, 10);
 
   useEffect(() => {
     if (!calendarState.length) {
@@ -150,6 +150,7 @@ function FilterableLeagueCalendar(props) {
         url: `http://api.football-data.org/v2/competitions/${leagueID}/matches`
       })
         .then(function (response) {
+          setLeagueNameState(response.data.competition.name);
           const result = response.data.matches.map((object) => {
             const correctDate = moment.utc(object.utcDate).format('DD.MM.YYYY');
             const resultData = {
@@ -173,11 +174,11 @@ function FilterableLeagueCalendar(props) {
           }
         });
     }
-  }, [setCalendarState]);
+  }, [calendarState]);
 
   return(
     <div className="container">
-      <h1 className="py-1 mb-4 text-center text-light bg-primary">{leagueName}</h1>
+      <h1 className="py-1 mb-4 text-center text-light bg-primary">{leagueNameState}</h1>
       <MatchSearchBar
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}

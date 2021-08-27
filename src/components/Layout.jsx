@@ -55,7 +55,7 @@ class Layout extends React.Component {
                 component={ ListOfLeagues }
               />
               <Route
-                exact path='/leagues/calendar'
+                path='/leagues/:leagueID'
                 component={ LeagueCalendar }
               />
               <Route

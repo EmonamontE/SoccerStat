@@ -3,16 +3,23 @@ import Home from "./Pages/Home";
 import ListOfLeagues from "./Pages/ListOfLeagues";
 import ListOfTeams from "./Pages/ListOfTeams";
 import LeagueCalendar from "./Pages/LeagueCalendar";
-// import SingleTeamCalendar from "./Pages/SingleTeamCalendar";
+import SingleTeamCalendar from "./Pages/SingleTeamCalendar";
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Switch
 } from "react-router-dom"
+// import { createBrowserHistory } from "history";
 
-class Layout extends React.Component {
-  render() {
+// const history = useHistory();
+
+// class Layout extends React.Component {
+function Layout() {
+  // render() {
+    // const history = useHistory();
+    // const customHistory = createBrowserHistory();
+
     return (
       <Router>
         <div className="container">
@@ -62,12 +69,16 @@ class Layout extends React.Component {
                 exact path='/teams'
                 component={ ListOfTeams }
               />
+              <Route
+                exact path='/teams/:teamID'
+                component={ SingleTeamCalendar }
+              />
             </Switch>
           </main>
         </div>
       </Router>
     );
-  }
+  // }
 }
 
 export default Layout;

@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+// import {
+//   useHistory,
+//   useLocation
+// } from "react-router-dom"
 import axios from "axios";
 import moment from 'moment';
 
@@ -95,14 +99,8 @@ function MatchSearchBar(props) {
     console.log(e.target.value);
   }
 
-  // const mySubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   console.log([props.filterStartDate, props.filterEndDate]);
-  // }
-
   return(
     <form
-      // onSubmit={mySubmitHandler}
       className="col-md-6 mb-4 d-flex flex-row"
     >
       <div className="col-md-4 input-group">
@@ -110,7 +108,7 @@ function MatchSearchBar(props) {
         <input
           type="text"
           name="startDate"
-          value={props.filterStartDate}
+          // value={props.filterStartDate}
           className="form-control"
           placeholder="этой даты"
           onInput={startDateChangeHandler}
@@ -119,7 +117,7 @@ function MatchSearchBar(props) {
         <input
           type="text"
           name="endDate"
-          value={props.filterEndDate}
+          // value={props.filterEndDate}
           className="form-control"
           placeholder="эту дату"
           onInput={endDateChangeHandler}
@@ -135,46 +133,50 @@ function MatchSearchBar(props) {
 
 // Родительский компонент с состоянием
 function FilterableLeagueCalendar(props) {
+  // const history = useHistory();
+
+  // const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  // const filterParams = params.has('filter') ? params.get('filter') : '';
+
   const [calendarState, setCalendarState] = useState([]);
   const [leagueNameState, setLeagueNameState] = useState('');
-  const [errorState, setErrorState] = useState('');
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
+  const [errorState, setErrorState] = useState('');
   const leagueID = parseInt(props.match.params.leagueID, 10);
 
   useEffect(() => {
-    if (!calendarState.length) {
-      axios({
-        method: 'GET',
-        headers: { 'X-Auth-Token': '2184eb2a881a4b80ba1e3286d359d9ee' },
-        url: `http://api.football-data.org/v2/competitions/${leagueID}/matches`
-      })
-        .then(function (response) {
-          setLeagueNameState(response.data.competition.name);
-          const result = response.data.matches.map((object) => {
-            const correctDate = moment.utc(object.utcDate).format('DD.MM.YYYY');
-            const resultData = {
-              id: object.id,
-              date: correctDate,
-              homeTeam: object.homeTeam.name,
-              awayTeam: object.awayTeam.name,
-              score: {
-                homeTeam: object.score.fullTime.homeTeam,
-                awayTeam: object.score.fullTime.awayTeam,
-              }
-            };
-            return resultData;
-          });
-          setCalendarState(result);
-        })
-        .catch(function (error) {
-          if (error) {
-            const result = true;
-            setErrorState(result);
-          }
+    axios({
+      method: 'GET',
+      headers: { 'X-Auth-Token': `${process.env.REACT_APP_API_KEY}` },
+      url: `http://api.football-data.org/v2/competitions/${leagueID}/matches`
+    })
+      .then(function (response) {
+        setLeagueNameState(response.data.competition.name);
+        const result = response.data.matches.map((object) => {
+          const correctDate = moment.utc(object.utcDate).format('DD.MM.YYYY');
+          const resultData = {
+            id: object.id,
+            date: correctDate,
+            homeTeam: object.homeTeam.name,
+            awayTeam: object.awayTeam.name,
+            score: {
+              homeTeam: object.score.fullTime.homeTeam,
+              awayTeam: object.score.fullTime.awayTeam,
+            }
+          };
+          return resultData;
         });
-    }
-  }, [calendarState]);
+        setCalendarState(result);
+      })
+      .catch(function (error) {
+        if (error) {
+          const result = true;
+          setErrorState(result);
+        }
+      });
+  }, [leagueID]);
 
   return(
     <div className="container">

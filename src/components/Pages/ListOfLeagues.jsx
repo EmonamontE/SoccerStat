@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-  Link
+  Link,
+  useHistory,
+  useLocation
 } from "react-router-dom"
 import axios from "axios";
 
@@ -18,38 +20,41 @@ function RowOfLeague(props) {
 function ListOfLeagues(props) {
   const filterText = props.filterText;
   const error = props.error;
-  const rows = [];
+  let rows = [];
 
-  if (!error) {
-    props.leagues.forEach((league) => {
-      if (league.name.indexOf(filterText) === -1) {
-        return;
-      }
-      rows.push(
+  if (error) {
+    return(
+      <div className="bg-dark text-danger text-center">
+        <h1>Network Error</h1>
+        <p className="fs-3">Превышено количество обращений к серверу</p>
+        <p className="fs-3">Не более 10 в минуту</p>
+      </div>
+    );
+  }
+
+  if (!filterText) {
+    // console.log(props.leagues);
+    rows = props.leagues;
+  } else {
+    // console.log(props.leagues);
+    rows = props.leagues.filter((league) => league.name.indexOf(filterText) > -1);
+  }
+
+  return (
+    <ul className="list-group">
+      {rows.map((league) => (
         <RowOfLeague
           league={league}
           key={league.id}
         />
-      );
-    });
-
-    return (
-      <ul className="list-group">
-        {rows}
-      </ul>
-    );
-  }
-
-  return (
-    <div className="bg-dark text-danger text-center">
-      <h1>Network Error</h1>
-      <p className="fs-3">Превышено количество обращений к серверу</p>
-      <p className="fs-3">Не более 10 в минуту</p>
-    </div>
+      ))}
+    </ul>
   );
 }
 
 function SearchBar(props) {
+  const filterText = props.filterText;
+
   const handleFilterTextChange = (e) => {
     props.onFilterTextChange(e.target.value);
   }
@@ -62,8 +67,7 @@ function SearchBar(props) {
         type="text"
         placeholder="Введите название лиги"
         onChange={handleFilterTextChange}
-        name="filter"
-        // value={props.filterText}
+        value={filterText}
       />
       <div className="form-text">Например: Premier League</div>
     </form>
@@ -71,49 +75,66 @@ function SearchBar(props) {
 }
 
 function FilterableListOfLeagues() {
-  const [leaguesState, setLeaguesState] = useState([]);
-  const [errorState, setErrorState] = useState('');
-  const [filterText, setFilterText] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const filterParams = params.has('filter') ? params.get('filter') : '';
+
+  // const [leaguesState, setLeaguesState] = useState([]);
+  // const [errorState, setErrorState] = useState('');
+  // const [filterText, setFilterText] = useState(filterParams);
+  const [listOfLeaguesState, setListOfLeaguesState] = useState({
+    leagues: [],
+    error: '',
+    filterText: filterParams
+  });
+
+  const setSearchFilter = (value) => {
+    const searchParams = new URLSearchParams({ filter: value });
+    history.push({
+      pathname: '/leagues',
+      search: '?' + searchParams
+    });
+    // setFilterText(value);
+    setListOfLeaguesState({ filterText: value });
+  };
 
   useEffect(() => {
-    if (!leaguesState.length) {
-      axios({
-        method: 'GET',
-        headers: { 'X-Auth-Token': '2184eb2a881a4b80ba1e3286d359d9ee' },
-        url: 'http://api.football-data.org/v2/competitions'
-      })
-        .then(function (response) {
-          const result = response.data.competitions.map((object) => {
-            const resultData = {
-              id: object.id,
-              country: object.area.name,
-              name: object.name
-            };
-            return resultData;
-          });
-          setLeaguesState(result);
-        })
-        .catch(function (error) {
-          if (error) {
-            const result = true;
-            setErrorState(result);
-          }
+    axios({
+      method: 'GET',
+      headers: { 'X-Auth-Token': `${process.env.REACT_APP_API_KEY}` },
+      url: 'http://api.football-data.org/v2/competitions'
+    })
+      .then(function (response) {
+        const result = response.data.competitions.map((object) => {
+          const resultData = {
+            id: object.id,
+            country: object.area.name,
+            name: object.name
+          };
+          return resultData;
         });
-    }
-  }, [leaguesState]);
+        // setLeaguesState(result);
+        setListOfLeaguesState({ leagues: result });
+      })
+      .catch(function (error) {
+        // setErrorState(result);
+        setListOfLeaguesState({ error: error });
+      });
+  }, [setListOfLeaguesState]);
 
   return (
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Список лиг</h1>
       <SearchBar
-        // leagues={leaguesState}
-        filterText={filterText}
-        onFilterTextChange={setFilterText}
+        filterText={listOfLeaguesState.filterText}
+        onFilterTextChange={setSearchFilter}
       />
       <ListOfLeagues
-        error={errorState}
-        leagues={leaguesState}
-        filterText={filterText}
+        error={listOfLeaguesState.error}
+        leagues={listOfLeaguesState.leagues}
+        filterText={listOfLeaguesState.filterText}
       />
     </div>
   );

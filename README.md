@@ -22,14 +22,15 @@
 
 ## Список лиг
 
-<p align="center">
-<img src="/readme_assets/ListOfLeagues.png" width="80%">
-</p>
+<!-- <p align="center">
+<img src="./readme_assets/1.png" width="80%">
+</p> -->
+![logo](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/1.PNG)
 
 ## Список команд
 
 <p align="center">
-<img src="/readme_assets/ListOfTeams.png" width="80%">
+<img src="./readme_assets/2.png" width="80%">
 </p>
 
 ## Установка и запуск

@@ -22,10 +22,7 @@
 
 ## Список лиг
 
-<!-- <p align="center">
-<img src="./readme_assets/1.png" width="80%">
-</p> -->
-![logo](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/1.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/1.PNG)
 
 ## Список команд
 

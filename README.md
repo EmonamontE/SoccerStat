@@ -23,7 +23,7 @@
 ## Список лиг
 
 <p align="center">
-<img  src="./readme_assets/1.png">
+<img  src="./readme_assets/1.png" />
 </p>
 
 ## Список команд

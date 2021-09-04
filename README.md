@@ -1,6 +1,7 @@
 <h1 align="center">SoccerStat</h1>
 <h2 align="center">
-[![react](./src/react.svg)](https://badges.aleen42.com/src/react.svg)
+<img src="https://img.shields.io/badge/react-17.0.2-blue">
+<img src="https://img.shields.io/badge/made%20by-EmonamontE-green">
 </h2>
 
 ## Описание

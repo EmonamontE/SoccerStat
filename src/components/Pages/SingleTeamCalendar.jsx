@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-// import {
-//   useHistory,
-//   useLocation
-// } from "react-router-dom"
 import axios from "axios";
 import moment from "moment";
 import RowOfMatch from "../RowOfMatch";
+import RequestError from "../RequestError";
 
 function ListOfMatches(props) {
   const error = props.error;
   const rows = [];
 
   if (error) {
-    return(
-      <div className="bg-dark text-danger text-center">
-        <h1>Network Error</h1>
-        <p className="fs-3">Превышено количество обращений к серверу</p>
-        <p className="fs-3">Не более 10 в минуту</p>
-      </div>
-    );
+    return <RequestError/>;
   }
 
   props.matches.forEach((match) => {

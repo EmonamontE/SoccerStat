@@ -2,6 +2,7 @@ import React from "react";
 import {
   Link
 } from "react-router-dom";
+import RequestError from "./RequestError";
 
 function RowOfLeague(props) {
   const league = props.league;
@@ -42,13 +43,7 @@ export default function ListOfTargets(props) {
   let rows = [];
 
   if (error) {
-    return(
-      <div className="bg-dark text-danger text-center">
-        <h1>Network Error</h1>
-        <p className="fs-3">Превышено количество обращений к серверу</p>
-        <p className="fs-3">Не более 10 в минуту</p>
-      </div>
-    );
+    return <RequestError/>;
   }
 
   if (target === 'leagues') {

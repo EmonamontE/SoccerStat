@@ -26,9 +26,17 @@
 
 ## Список команд
 
-<p align="center">
-<img src="./readme_assets/2.png" width="80%">
-</p>
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/2.PNG)
+
+## Календарь лиги
+
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/3.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/4.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/5.PNG)
+
+## Календарь одной команды
+
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/6.PNG)
 
 ## Установка и запуск
 

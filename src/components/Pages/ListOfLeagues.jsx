@@ -33,10 +33,8 @@ function ListOfLeagues(props) {
   }
 
   if (!filterText) {
-    // console.log(props.leagues);
     rows = props.leagues;
   } else {
-    // console.log(props.leagues);
     rows = props.leagues.filter((league) => league.name.indexOf(filterText) > -1);
   }
 
@@ -81,14 +79,11 @@ function FilterableListOfLeagues() {
   const params = new URLSearchParams(location.search);
   const filterParams = params.has('filter') ? params.get('filter') : '';
 
-  // const [leaguesState, setLeaguesState] = useState([]);
-  // const [errorState, setErrorState] = useState('');
-  // const [filterText, setFilterText] = useState(filterParams);
   const [listOfLeaguesState, setListOfLeaguesState] = useState({
     leagues: [],
-    error: '',
-    filterText: filterParams
+    error: ''
   });
+  const [filterText, setFilterText] = useState(filterParams);
 
   const setSearchFilter = (value) => {
     const searchParams = new URLSearchParams({ filter: value });
@@ -96,8 +91,7 @@ function FilterableListOfLeagues() {
       pathname: '/leagues',
       search: '?' + searchParams
     });
-    // setFilterText(value);
-    setListOfLeaguesState({ filterText: value });
+    setFilterText(value);
   };
 
   useEffect(() => {
@@ -115,11 +109,9 @@ function FilterableListOfLeagues() {
           };
           return resultData;
         });
-        // setLeaguesState(result);
         setListOfLeaguesState({ leagues: result });
       })
       .catch(function (error) {
-        // setErrorState(result);
         setListOfLeaguesState({ error: error });
       });
   }, [setListOfLeaguesState]);
@@ -128,13 +120,13 @@ function FilterableListOfLeagues() {
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Список лиг</h1>
       <SearchBar
-        filterText={listOfLeaguesState.filterText}
+        filterText={filterText}
         onFilterTextChange={setSearchFilter}
       />
       <ListOfLeagues
         error={listOfLeaguesState.error}
         leagues={listOfLeaguesState.leagues}
-        filterText={listOfLeaguesState.filterText}
+        filterText={filterText}
       />
     </div>
   );

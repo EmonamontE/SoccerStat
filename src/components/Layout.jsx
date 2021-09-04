@@ -10,16 +10,8 @@ import {
   Link,
   Switch
 } from "react-router-dom"
-// import { createBrowserHistory } from "history";
 
-// const history = useHistory();
-
-// class Layout extends React.Component {
 function Layout() {
-  // render() {
-    // const history = useHistory();
-    // const customHistory = createBrowserHistory();
-
     return (
       <Router>
         <div className="container">

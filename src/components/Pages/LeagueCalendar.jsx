@@ -47,35 +47,9 @@ function ListOfMatches(props) {
   const error = props.error;
   const filterStartDate = props.filterStartDate;
   const filterEndDate = props.filterEndDate;
+  const rows = [];
 
-  if (!error) {
-    const rows = [];
-
-    props.matches.forEach((match) => {
-      if (filterStartDate && filterEndDate) {
-        if (moment(filterStartDate, 'DD.MM.YYYY') > moment(match.date, 'DD.MM.YYYY')) {
-          return;
-        }
-        if (moment(match.date, 'DD.MM.YYYY') > moment(filterEndDate, 'DD.MM.YYYY')) {
-          return;
-        }
-      }
-      rows.push(
-        <RowOfMatch
-          match={match}
-          key={match.id}
-        />
-      );
-    });
-
-    return (
-      <div>
-        <ul className="list-group">
-          {rows}
-        </ul>
-      </div>
-    );
-  } else {
+  if (error) {
     return (
       <div>
         <h2>Выбранная лига не доступна на текущем тарифе используемого API</h2>
@@ -85,6 +59,31 @@ function ListOfMatches(props) {
       </div>
     );
   }
+
+  props.matches.forEach((match) => {
+    if (filterStartDate && filterEndDate) {
+      if (moment(filterStartDate, 'DD.MM.YYYY') > moment(match.date, 'DD.MM.YYYY')) {
+        return;
+      }
+      if (moment(match.date, 'DD.MM.YYYY') > moment(filterEndDate, 'DD.MM.YYYY')) {
+        return;
+      }
+    }
+    rows.push(
+      <RowOfMatch
+        match={match}
+        key={match.id}
+      />
+    );
+  });
+
+  return (
+    <div>
+      <ul className="list-group">
+        {rows}
+      </ul>
+    </div>
+  );
 }
 
 // Компонент со строкой поиска
@@ -133,17 +132,14 @@ function MatchSearchBar(props) {
 
 // Родительский компонент с состоянием
 function FilterableLeagueCalendar(props) {
-  // const history = useHistory();
 
-  // const location = useLocation();
-  // const params = new URLSearchParams(location.search);
-  // const filterParams = params.has('filter') ? params.get('filter') : '';
-
-  const [calendarState, setCalendarState] = useState([]);
-  const [leagueNameState, setLeagueNameState] = useState('');
+  const [leagueName, setLeagueName] = useState('');
+  const [leagueCalendarState, setLeagueCalendarState] = useState({
+    calendar: [],
+    error: ''
+  });
   const [filterStartDate, setFilterStartDate] = useState('');
   const [filterEndDate, setFilterEndDate] = useState('');
-  const [errorState, setErrorState] = useState('');
   const leagueID = parseInt(props.match.params.leagueID, 10);
 
   useEffect(() => {
@@ -153,7 +149,7 @@ function FilterableLeagueCalendar(props) {
       url: `http://api.football-data.org/v2/competitions/${leagueID}/matches`
     })
       .then(function (response) {
-        setLeagueNameState(response.data.competition.name);
+        setLeagueName(response.data.competition.name);
         const result = response.data.matches.map((object) => {
           const correctDate = moment.utc(object.utcDate).format('DD.MM.YYYY');
           const resultData = {
@@ -168,19 +164,16 @@ function FilterableLeagueCalendar(props) {
           };
           return resultData;
         });
-        setCalendarState(result);
+        setLeagueCalendarState({ calendar: result });
       })
       .catch(function (error) {
-        if (error) {
-          const result = true;
-          setErrorState(result);
-        }
+        setLeagueCalendarState({ error: error });
       });
   }, [leagueID]);
 
   return(
     <div className="container">
-      <h1 className="py-1 mb-4 text-center text-light bg-primary">{leagueNameState}</h1>
+      <h1 className="py-1 mb-4 text-center text-light bg-primary">{leagueName}</h1>
       <MatchSearchBar
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}
@@ -190,8 +183,8 @@ function FilterableLeagueCalendar(props) {
       <ListOfMatches
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}
-        matches={calendarState}
-        error={errorState}
+        matches={leagueCalendarState.calendar}
+        error={leagueCalendarState.error}
       />
     </div>
   );

@@ -22,21 +22,29 @@
 
 ## Список лиг
 
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/1.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/ListOfLeagues.PNG)
 
 ## Список команд
 
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/2.PNG)
+На данной странице приведен список команд Английской премьер-лиги:
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/ListOfTeams.PNG)
 
 ## Календарь лиги
 
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/3.PNG)
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/4.PNG)
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/5.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/LeagueCalendar_1.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/LeagueCalendar_2.PNG)
 
 ## Календарь одной команды
 
-![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/6.PNG)
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/TeamCalendar.PNG)
+
+## Возможные ошибки
+
+При попытке получить данные о лиге, не предусмотренной в бесплатной версии используемого API:
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/LeaguesError.PNG)
+
+Ошибка о превышении количества запросов
+![picture](https://github.com/EmonamontE/SoccerStat/blob/main/readme_assets/RequestError.PNG)
 
 ## Установка и запуск
 

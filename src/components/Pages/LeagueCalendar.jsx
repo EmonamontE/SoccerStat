@@ -1,46 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import {
-//   useHistory,
-//   useLocation
-// } from "react-router-dom"
 import axios from "axios";
 import moment from 'moment';
-
-// Копмонент с матчем
-function RowOfMatch(props) {
-  const match = props.match;
-  let score;
-  let info;
-
-  if (match.score.homeTeam !== null) {
-    score = (
-      <div>
-        <h1>{match.score.homeTeam} : {match.score.awayTeam}</h1>
-      </div>
-    );
-  } else {
-    score = <h1 className="text-secondary">? : ?</h1>;
-    info = <p className="text-secondary">Матч еще не состоялся</p>
-  }
-
-  return(
-    <li className="list-group-item">
-      <div className="col-md-12 text-center">{match.date}</div>
-      <div className="d-flex flex-row">
-        <div className="col-md-4 text-end">
-          <p className="fs-3">{match.homeTeam}</p>
-        </div>
-        <div className="col-md-4 text-center">
-          {score}
-          {info}
-        </div>
-        <div className="col-md-4 text-start">
-          <p className="fs-3">{match.awayTeam}</p>
-        </div>
-      </div>
-    </li>
-  );
-}
+import RowOfMatch from "../RowOfMatch";
 
 // Компонент со списком матчей
 function ListOfMatches(props) {
@@ -132,7 +93,6 @@ function MatchSearchBar(props) {
 
 // Родительский компонент с состоянием
 function FilterableLeagueCalendar(props) {
-
   const [leagueName, setLeagueName] = useState('');
   const [leagueCalendarState, setLeagueCalendarState] = useState({
     calendar: [],

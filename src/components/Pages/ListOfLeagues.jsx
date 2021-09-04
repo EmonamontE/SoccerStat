@@ -5,50 +5,51 @@ import {
   useLocation
 } from "react-router-dom"
 import axios from "axios";
+import ListOfTargets from "../ListOfTargets";
 
-function RowOfLeague(props) {
-  const league = props.league;
-  return (
-    <Link to={`/leagues/${league.id}`}>
-      <li className="list-group-item">
-        <p className="fs-4">{league.name} / {league.country}</p>
-      </li>
-    </Link>
-  );
-}
+// function RowOfLeague(props) {
+//   const league = props.league;
+//   return (
+//     <Link to={`/leagues/${league.id}`}>
+//       <li className="list-group-item">
+//         <p className="fs-4">{league.name} / {league.country}</p>
+//       </li>
+//     </Link>
+//   );
+// }
 
-function ListOfLeagues(props) {
-  const filterText = props.filterText;
-  const error = props.error;
-  let rows = [];
+// function ListOfLeagues(props) {
+//   const filterText = props.filterText;
+//   const error = props.error;
+//   let rows = [];
 
-  if (error) {
-    return(
-      <div className="bg-dark text-danger text-center">
-        <h1>Network Error</h1>
-        <p className="fs-3">Превышено количество обращений к серверу</p>
-        <p className="fs-3">Не более 10 в минуту</p>
-      </div>
-    );
-  }
+//   if (error) {
+//     return(
+//       <div className="bg-dark text-danger text-center">
+//         <h1>Network Error</h1>
+//         <p className="fs-3">Превышено количество обращений к серверу</p>
+//         <p className="fs-3">Не более 10 в минуту</p>
+//       </div>
+//     );
+//   }
 
-  if (!filterText) {
-    rows = props.leagues;
-  } else {
-    rows = props.leagues.filter((league) => league.name.indexOf(filterText) > -1);
-  }
+//   if (!filterText) {
+//     rows = props.leagues;
+//   } else {
+//     rows = props.leagues.filter((league) => league.name.indexOf(filterText) > -1);
+//   }
 
-  return (
-    <ul className="list-group">
-      {rows.map((league) => (
-        <RowOfLeague
-          league={league}
-          key={league.id}
-        />
-      ))}
-    </ul>
-  );
-}
+//   return (
+//     <ul className="list-group">
+//       {rows.map((league) => (
+//         <RowOfLeague
+//           league={league}
+//           key={league.id}
+//         />
+//       ))}
+//     </ul>
+//   );
+// }
 
 function SearchBar(props) {
   const filterText = props.filterText;
@@ -123,7 +124,8 @@ function FilterableListOfLeagues() {
         filterText={filterText}
         onFilterTextChange={setSearchFilter}
       />
-      <ListOfLeagues
+      <ListOfTargets
+        target="leagues"
         error={listOfLeaguesState.error}
         leagues={listOfLeaguesState.leagues}
         filterText={filterText}

@@ -5,11 +5,11 @@ import {
   Link,
   Switch
 } from "react-router-dom";
-import Home from "./Pages/Home";
-import ListOfLeagues from "./Pages/ListOfLeagues";
-import ListOfTeams from "./Pages/ListOfTeams";
-import LeagueCalendar from "./Pages/LeagueCalendar";
-import SingleTeamCalendar from "./Pages/SingleTeamCalendar";
+import Home from "./pages/Home";
+import ListOfLeagues from "./pages/ListOfLeagues";
+import ListOfTeams from "./pages/ListOfTeams";
+import LeagueCalendar from "./pages/LeagueCalendar";
+import SingleTeamCalendar from "./pages/SingleTeamCalendar";
 
 function Layout() {
     return (

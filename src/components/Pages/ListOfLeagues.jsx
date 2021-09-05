@@ -5,28 +5,7 @@ import {
 } from "react-router-dom"
 import axios from "axios";
 import ListOfTargets from "../ListOfTargets";
-
-function SearchBar(props) {
-  const filterText = props.filterText;
-
-  const handleFilterTextChange = (e) => {
-    props.onFilterTextChange(e.target.value);
-  }
-
-  return(
-    <form className="col-md-3 mb-4">
-      <label className="form-label fs-3">Поиск по названию</label>
-      <input
-        className="form-control form-control-lg"
-        type="text"
-        placeholder="Введите название лиги"
-        onChange={handleFilterTextChange}
-        value={filterText}
-      />
-      <div className="form-text">Например: Premier League</div>
-    </form>
-  );
-}
+import FilterByNames from "../FilterByNames";
 
 function FilterableListOfLeagues() {
   const history = useHistory();
@@ -75,7 +54,7 @@ function FilterableListOfLeagues() {
   return (
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Список лиг</h1>
-      <SearchBar
+      <FilterByNames
         filterText={filterText}
         onFilterTextChange={setSearchFilter}
       />

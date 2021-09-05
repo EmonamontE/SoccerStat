@@ -1,5 +1,8 @@
 import React from "react";
 
+// Компонент с данными о матче
+// Формирует элемент для немаркированного списка
+// Используется в компонентах с календарями
 export default function RowOfMatch(props) {
   const match = props.match;
   let score;

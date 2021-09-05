@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function RequestError() {
+// Компонент с ошибкой о превышении количества запросов
+export default function TenRequestsError() {
   return(
     <div className="bg-dark text-danger text-center">
       <h1>Network Error</h1>

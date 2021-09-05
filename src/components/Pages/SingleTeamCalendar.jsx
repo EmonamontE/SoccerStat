@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import RowOfMatch from "../RowOfMatch";
-import RequestError from "../RequestError";
+import TenRequestsError from "../TenRequestsError";
 
-function ListOfMatches(props) {
+function CalendarOfMatches(props) {
   const error = props.error;
   const rows = [];
 
   if (error) {
-    return <RequestError/>;
+    return <TenRequestsError/>;
   }
 
   props.matches.forEach((match) => {
@@ -79,7 +79,7 @@ function SingleTeamCalendar(props) {
   return(
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Календарь матчей клуба {teamNameState}</h1>
-      <ListOfMatches
+      <CalendarOfMatches
         matches={gamesCalendarState}
         error={errorState}
       />

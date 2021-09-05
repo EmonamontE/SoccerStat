@@ -2,8 +2,9 @@ import React from "react";
 import {
   Link
 } from "react-router-dom";
-import RequestError from "./RequestError";
+import TenRequestsError from "./TenRequestsError";
 
+// Компонент с лигой для формирования списка
 function RowOfLeague(props) {
   const league = props.league;
   return (
@@ -15,6 +16,7 @@ function RowOfLeague(props) {
   );
 }
 
+// Компонент с командой для формирования списка
 function RowOfTeam(props) {
   const team = props.team;
   return(
@@ -35,6 +37,8 @@ function RowOfTeam(props) {
   );
 }
 
+// Компонент, который в зависимости от пропса target
+// отрисовывает либо список лиг, либо список команд
 export default function ListOfTargets(props) {
   let arrayOfData;
   const target = props.target;
@@ -43,7 +47,7 @@ export default function ListOfTargets(props) {
   let rows = [];
 
   if (error) {
-    return <RequestError/>;
+    return <TenRequestsError/>;
   }
 
   if (target === 'leagues') {

@@ -8,7 +8,7 @@ import moment from 'moment';
 import RowOfMatch from "../RowOfMatch";
 
 // Компонент со списком матчей
-function ListOfMatches(props) {
+function CalendarOfMatches(props) {
   const error = props.error;
   const filterStartDate = props.filterStartDate;
   const filterEndDate = props.filterEndDate;
@@ -17,7 +17,7 @@ function ListOfMatches(props) {
   if (error) {
     return (
       <div>
-        <h2>Выбранная лига не доступна на текущем тарифе используемого API</h2>
+        <h2>Выбранная лига не доступна на текущем тарифе используемого API или превышено количество обращений к серверу</h2>
         <p className="fs-3">
           Для выбора нового тарифного плана нажмите <a href="https://www.football-data.org/pricing" target="_blank" rel="noreferrer">сюда</a>
         </p>
@@ -26,14 +26,18 @@ function ListOfMatches(props) {
   }
 
   props.matches.forEach((match) => {
-    if (filterStartDate && filterEndDate) {
+    if (filterStartDate) {
       if (moment(filterStartDate, 'DD.MM.YYYY') > moment(match.date, 'DD.MM.YYYY')) {
         return;
       }
+    }
+
+    if (filterEndDate) {
       if (moment(match.date, 'DD.MM.YYYY') > moment(filterEndDate, 'DD.MM.YYYY')) {
         return;
       }
     }
+
     rows.push(
       <RowOfMatch
         match={match}
@@ -51,8 +55,8 @@ function ListOfMatches(props) {
   );
 }
 
-// Компонент со строкой поиска
-function MatchSearchBar(props) {
+// Компонент с формой для фильтрации
+function CalendarFilter(props) {
   const startDateChangeHandler = (e) => {
     props.onFilterStartDateChange(e.target.value);
   }
@@ -63,9 +67,10 @@ function MatchSearchBar(props) {
 
   return(
     <form
-      className="col-md-6 mb-4 d-flex flex-row"
+      className="col-md-5 mb-4"
     >
-      <div className="col-md-4 input-group">
+      <label className="form-label fs-3">Фильтр по календарю</label>
+      <div className="input-group">
         <span className="input-group-text">С</span>
         <input
           type="text"
@@ -89,7 +94,7 @@ function MatchSearchBar(props) {
   );
 }
 
-// Родительский компонент с состоянием
+// Родительский компонент с состоянием и запросом к API
 function FilterableLeagueCalendar(props) {
   const history = useHistory();
   const location = useLocation();
@@ -163,13 +168,13 @@ function FilterableLeagueCalendar(props) {
   return(
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">{leagueName}</h1>
-      <MatchSearchBar
+      <CalendarFilter
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}
         onFilterStartDateChange={setStartDateFilter}
         onFilterEndDateChange={setEndDateFilter}
       />
-      <ListOfMatches
+      <CalendarOfMatches
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}
         matches={leagueCalendarState.calendar}

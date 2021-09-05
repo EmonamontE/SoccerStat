@@ -1,64 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  Link,
   useHistory,
   useLocation
 } from "react-router-dom"
 import axios from "axios";
 import ListOfTargets from "../ListOfTargets";
-
-// function RowOfTeam(props) {
-//   const team = props.team;
-//   return(
-//     <Link to={`/teams/${team.id}`}>
-//       <li className="list-group-item">
-//         <p className="pt-3 fs-4">
-//           <img
-//             src={team.pic}
-//             height="45px"
-//             width="45px"
-//             className="me-1"
-//             alt="team_logo"
-//           />
-//           {team.name} / {team.country}
-//         </p>
-//       </li>
-//     </Link>
-//   );
-// }
-
-// function ListOfTeams(props) {
-//   const filterText = props.filterText;
-//   const error = props.error;
-//   let rows = [];
-
-//   if (error) {
-//     return(
-//       <div className="bg-dark text-danger text-center">
-//         <h1>Network Error</h1>
-//         <p className="fs-3">Превышено количество обращений к серверу</p>
-//         <p className="fs-3">Не более 10 в минуту</p>
-//       </div>
-//     );
-//   }
-
-//   if (!filterText) {
-//     rows = props.teams;
-//   } else {
-//     rows = props.teams.filter((team) => team.name.indexOf(filterText) > -1);
-//   }
-
-//   return (
-//     <ul className="list-group">
-//       {rows.map((team) => (
-//         <RowOfTeam
-//           team={team}
-//           key={team.id}
-//         />
-//       ))}
-//     </ul>
-//   );
-// }
 
 function SearchBar(props) {
   const filterText = props.filterText;

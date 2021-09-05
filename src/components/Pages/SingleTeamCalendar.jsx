@@ -76,10 +76,6 @@ function SingleTeamCalendar(props) {
       });
   }, [teamID]);
 
-  // useEffect(() => {
-
-  // }, [teamID]);
-
   return(
     <div className="container">
       <h1 className="py-1 mb-4 text-center text-light bg-primary">Календарь матчей клуба {teamNameState}</h1>

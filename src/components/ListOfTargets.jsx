@@ -69,16 +69,16 @@ export default function ListOfTargets(props) {
         ))}
       </ul>
     );
-  } else {
-    return (
-      <ul className="list-group">
-        {rows.map((team) => (
-          <RowOfTeam
-            team={team}
-            key={team.id}
-          />
-        ))}
-      </ul>
-    );
   }
+
+  return (
+    <ul className="list-group">
+      {rows.map((team) => (
+        <RowOfTeam
+          team={team}
+          key={team.id}
+        />
+      ))}
+    </ul>
+  );
 }

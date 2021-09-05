@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import {
+  useHistory,
+  useLocation
+} from "react-router-dom"
 import axios from "axios";
 import moment from 'moment';
 import RowOfMatch from "../RowOfMatch";
@@ -51,12 +55,10 @@ function ListOfMatches(props) {
 function MatchSearchBar(props) {
   const startDateChangeHandler = (e) => {
     props.onFilterStartDateChange(e.target.value);
-    console.log(e.target.value);
   }
 
   const endDateChangeHandler = (e) => {
     props.onFilterEndDateChange(e.target.value);
-    console.log(e.target.value);
   }
 
   return(
@@ -68,7 +70,7 @@ function MatchSearchBar(props) {
         <input
           type="text"
           name="startDate"
-          // value={props.filterStartDate}
+          value={props.filterStartDate}
           className="form-control"
           placeholder="этой даты"
           onInput={startDateChangeHandler}
@@ -77,15 +79,11 @@ function MatchSearchBar(props) {
         <input
           type="text"
           name="endDate"
-          // value={props.filterEndDate}
+          value={props.filterEndDate}
           className="form-control"
           placeholder="эту дату"
           onInput={endDateChangeHandler}
         />
-        <button
-          className="btn btn-outline-secondary"
-          type="submit"
-        >Поиск</button>
       </div>
     </form>
   );
@@ -93,14 +91,45 @@ function MatchSearchBar(props) {
 
 // Родительский компонент с состоянием
 function FilterableLeagueCalendar(props) {
+  const history = useHistory();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const beginParam = params.has('begin') ? params.get('begin') : '';
+  const endParam = params.has('end') ? params.get('end') : '';
+
   const [leagueName, setLeagueName] = useState('');
   const [leagueCalendarState, setLeagueCalendarState] = useState({
     calendar: [],
     error: ''
   });
-  const [filterStartDate, setFilterStartDate] = useState('');
-  const [filterEndDate, setFilterEndDate] = useState('');
+  const [filterStartDate, setFilterStartDate] = useState(beginParam);
+  const [filterEndDate, setFilterEndDate] = useState(endParam);
   const leagueID = parseInt(props.match.params.leagueID, 10);
+
+  const updateFilter = (paramName, value) => {
+    params.set(paramName, value);
+    history.push({
+      pathname: `/leagues/${leagueID}`,
+      search: '?' + params
+    });
+
+    if (paramName === 'begin') {
+      setFilterStartDate(value);
+    }
+
+    if (paramName === 'end') {
+      setFilterEndDate(value);
+    }
+  }
+
+  const setStartDateFilter = (value) => {
+    updateFilter('begin', value);
+  };
+
+  const setEndDateFilter = (value) => {
+    updateFilter('end', value);
+  };
 
   useEffect(() => {
     axios({
@@ -137,8 +166,8 @@ function FilterableLeagueCalendar(props) {
       <MatchSearchBar
         filterStartDate={filterStartDate}
         filterEndDate={filterEndDate}
-        onFilterStartDateChange={setFilterStartDate}
-        onFilterEndDateChange={setFilterEndDate}
+        onFilterStartDateChange={setStartDateFilter}
+        onFilterEndDateChange={setEndDateFilter}
       />
       <ListOfMatches
         filterStartDate={filterStartDate}

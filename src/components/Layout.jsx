@@ -1,15 +1,15 @@
 import React from "react";
-import Home from "./Pages/Home";
-import ListOfLeagues from "./Pages/ListOfLeagues";
-import ListOfTeams from "./Pages/ListOfTeams";
-import LeagueCalendar from "./Pages/LeagueCalendar";
-import SingleTeamCalendar from "./Pages/SingleTeamCalendar";
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Switch
-} from "react-router-dom"
+} from "react-router-dom";
+import Home from "./Pages/Home";
+import ListOfLeagues from "./Pages/ListOfLeagues";
+import ListOfTeams from "./Pages/ListOfTeams";
+import LeagueCalendar from "./Pages/LeagueCalendar";
+import SingleTeamCalendar from "./Pages/SingleTeamCalendar";
 
 function Layout() {
     return (

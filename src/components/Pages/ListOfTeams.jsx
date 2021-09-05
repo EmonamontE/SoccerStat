@@ -4,8 +4,8 @@ import {
   useLocation
 } from "react-router-dom"
 import axios from "axios";
-import ListOfTargets from "../ListOfTargets";
-import FilterByNames from "../FilterByNames";
+import ListOfTargets from "../For lists/ListOfTargets";
+import FilterByNames from "../Filters/FilterByNames";
 
 function FilterableListOfTeams() {
   const history = useHistory();

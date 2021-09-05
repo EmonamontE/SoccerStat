@@ -4,97 +4,10 @@ import {
   useLocation
 } from "react-router-dom"
 import axios from "axios";
-import moment from 'moment';
-import RowOfMatch from "../RowOfMatch";
+import moment from "moment";
+import CalendarOfMatches from "../For calendars/CalendarOfMatches";
+import CalendarFilter from "../Filters/CalendarFilter";
 
-// Компонент со списком матчей
-function CalendarOfMatches(props) {
-  const error = props.error;
-  const filterStartDate = props.filterStartDate;
-  const filterEndDate = props.filterEndDate;
-  const rows = [];
-
-  if (error) {
-    return (
-      <div>
-        <h2>Выбранная лига не доступна на текущем тарифе используемого API или превышено количество обращений к серверу</h2>
-        <p className="fs-3">
-          Для выбора нового тарифного плана нажмите <a href="https://www.football-data.org/pricing" target="_blank" rel="noreferrer">сюда</a>
-        </p>
-      </div>
-    );
-  }
-
-  props.matches.forEach((match) => {
-    if (filterStartDate) {
-      if (moment(filterStartDate, 'DD.MM.YYYY') > moment(match.date, 'DD.MM.YYYY')) {
-        return;
-      }
-    }
-
-    if (filterEndDate) {
-      if (moment(match.date, 'DD.MM.YYYY') > moment(filterEndDate, 'DD.MM.YYYY')) {
-        return;
-      }
-    }
-
-    rows.push(
-      <RowOfMatch
-        match={match}
-        key={match.id}
-      />
-    );
-  });
-
-  return (
-    <div>
-      <ul className="list-group">
-        {rows}
-      </ul>
-    </div>
-  );
-}
-
-// Компонент с формой для фильтрации
-function CalendarFilter(props) {
-  const startDateChangeHandler = (e) => {
-    props.onFilterStartDateChange(e.target.value);
-  }
-
-  const endDateChangeHandler = (e) => {
-    props.onFilterEndDateChange(e.target.value);
-  }
-
-  return(
-    <form
-      className="col-md-5 mb-4"
-    >
-      <label className="form-label fs-3">Фильтр по календарю</label>
-      <div className="input-group">
-        <span className="input-group-text">С</span>
-        <input
-          type="text"
-          name="startDate"
-          value={props.filterStartDate}
-          className="form-control"
-          placeholder="этой даты"
-          onInput={startDateChangeHandler}
-        />
-        <span className="input-group-text">по</span>
-        <input
-          type="text"
-          name="endDate"
-          value={props.filterEndDate}
-          className="form-control"
-          placeholder="эту дату"
-          onInput={endDateChangeHandler}
-        />
-      </div>
-    </form>
-  );
-}
-
-// Родительский компонент с состоянием и запросом к API
 function FilterableLeagueCalendar(props) {
   const history = useHistory();
   const location = useLocation();

@@ -2,7 +2,7 @@ import React from "react";
 import {
   Link
 } from "react-router-dom";
-import TenRequestsError from "./TenRequestsError";
+import TenRequestsError from "../errors/TenRequestsError";
 
 // Компонент с лигой для формирования списка
 function RowOfLeague(props) {

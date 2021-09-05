@@ -1,40 +1,53 @@
 import React, { useEffect, useState } from "react";
+import {
+  useHistory,
+  useLocation
+} from "react-router-dom"
 import axios from "axios";
 import moment from "moment";
-import RowOfMatch from "../RowOfMatch";
-import TenRequestsError from "../TenRequestsError";
-
-function CalendarOfMatches(props) {
-  const error = props.error;
-  const rows = [];
-
-  if (error) {
-    return <TenRequestsError/>;
-  }
-
-  props.matches.forEach((match) => {
-    rows.push(
-      <RowOfMatch
-        match={match}
-        key={match.id}
-      />
-    )
-  });
-
-  return (
-    <div>
-      <ul className="list-group">
-        {rows}
-      </ul>
-    </div>
-  );
-}
+import CalendarOfMatches from "../For calendars/CalendarOfMatches";
+import CalendarFilter from "../Filters/CalendarFilter";
 
 function SingleTeamCalendar(props) {
-  const [teamNameState, setTeamNameState] = useState('');
-  const [gamesCalendarState, setGamesCalendarState] = useState([]);
-  const [errorState, setErrorState] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const beginParam = params.has('begin') ? params.get('begin') : '';
+  const endParam = params.has('end') ? params.get('end') : '';
+
+  const [teamName, setTeamName] = useState('');
+  const [teamCalendarState, setTeamCalendarState] = useState({
+    calendar: [],
+    error: ''
+  });
+  const [filterStartDate, setFilterStartDate] = useState(beginParam);
+  const [filterEndDate, setFilterEndDate] = useState(endParam);
   const teamID = parseInt(props.match.params.teamID, 10);
+
+  const updateFilter = (paramName, value) => {
+    params.set(paramName, value);
+    history.push({
+      pathname: `/teams/${teamID}`,
+      search: '?' + params
+    });
+
+    if (paramName === 'begin') {
+      setFilterStartDate(value);
+    }
+
+    if (paramName === 'end') {
+      setFilterEndDate(value);
+    }
+  }
+
+  const setStartDateFilter = (value) => {
+    updateFilter('begin', value);
+  };
+
+  const setEndDateFilter = (value) => {
+    updateFilter('end', value);
+  };
 
   useEffect(() => {
     axios({
@@ -43,7 +56,7 @@ function SingleTeamCalendar(props) {
       url: `http://api.football-data.org/v2/teams/${teamID}`
     })
       .then(function(response) {
-        setTeamNameState(response.data.name);
+        setTeamName(response.data.name);
       });
 
     axios({
@@ -66,22 +79,27 @@ function SingleTeamCalendar(props) {
           };
           return resultData;
         });
-        setGamesCalendarState(result);
+        setTeamCalendarState({ calendar: result });
       })
       .catch(function (error) {
-        if (error) {
-          const result = true;
-          setErrorState(result);
-        }
+        setTeamCalendarState({ error: error });
       });
   }, [teamID]);
 
   return(
     <div className="container">
-      <h1 className="py-1 mb-4 text-center text-light bg-primary">Календарь матчей клуба {teamNameState}</h1>
+      <h1 className="py-1 mb-4 text-center text-light bg-primary">Календарь матчей клуба {teamName}</h1>
+      <CalendarFilter
+        filterStartDate={filterStartDate}
+        filterEndDate={filterEndDate}
+        onFilterStartDateChange={setStartDateFilter}
+        onFilterEndDateChange={setEndDateFilter}
+      />
       <CalendarOfMatches
-        matches={gamesCalendarState}
-        error={errorState}
+        filterStartDate={filterStartDate}
+        filterEndDate={filterEndDate}
+        matches={teamCalendarState.calendar}
+        error={teamCalendarState.error}
       />
     </div>
   );

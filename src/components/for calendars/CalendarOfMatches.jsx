@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import RowOfMatch from "./RowOfMatch";
-import CommonError from "../Errors/CommonError";
+import CommonError from "../errors/CommonError";
 
 // Компонент, формирующий календарь
 export default function CalendarOfMatches(props) {

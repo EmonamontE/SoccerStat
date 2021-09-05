@@ -5,8 +5,8 @@ import {
 } from "react-router-dom"
 import axios from "axios";
 import moment from "moment";
-import CalendarOfMatches from "../For calendars/CalendarOfMatches";
-import CalendarFilter from "../Filters/CalendarFilter";
+import CalendarOfMatches from "../for calendars/CalendarOfMatches";
+import CalendarFilter from "../filters/CalendarFilter";
 
 function FilterableLeagueCalendar(props) {
   const history = useHistory();

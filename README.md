@@ -3,6 +3,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/react-17.0.2-blue">
 <img src="https://img.shields.io/badge/made%20by-EmonamontE-green">
+<img src="https://img.shields.io/badge/version-1.0.0-brightgreen">
 <a href="https://codeclimate.com/github/EmonamontE/SoccerStat/maintainability"><img src="https://api.codeclimate.com/v1/badges/699b23798865795cbafc/maintainability" /></a>
 </p>
 

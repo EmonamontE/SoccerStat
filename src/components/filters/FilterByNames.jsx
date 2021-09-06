@@ -1,5 +1,7 @@
 import React from "react";
 
+// Компонент-форма с одним инпутом для
+// фильтрации списка по именам
 export default function FilterByNames(props) {
   const filterText = props.filterText;
 

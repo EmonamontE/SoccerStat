@@ -1,5 +1,7 @@
 import React from "react";
 
+// Компонент с ошибкой о превышении количества запросов.
+// Рендерится на страницах со списками
 export default function TenRequestsError() {
   return(
     <div className="bg-dark text-danger text-center">

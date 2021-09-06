@@ -1,5 +1,7 @@
 import React from "react";
 
+// Компонент-форма с двумя инпутами для
+// фильтрации по календарю
 export default function CalendarFilter(props) {
   const startDateChangeHandler = (e) => {
     props.onFilterStartDateChange(e.target.value);

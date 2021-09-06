@@ -5,9 +5,10 @@ import {
 } from "react-router-dom"
 import axios from "axios";
 import moment from "moment";
-import CalendarOfMatches from "../for calendars/CalendarOfMatches";
+import CalendarOfMatches from "../for_calendars/CalendarOfMatches";
 import CalendarFilter from "../filters/CalendarFilter";
 
+// Календарь лиги
 function FilterableLeagueCalendar(props) {
   const history = useHistory();
   const location = useLocation();

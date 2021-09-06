@@ -4,9 +4,10 @@ import {
   useLocation
 } from "react-router-dom"
 import axios from "axios";
-import ListOfTargets from "../for lists/ListOfTargets";
+import ListOfTargets from "../for_lists/ListOfTargets";
 import FilterByNames from "../filters/FilterByNames";
 
+// Список лиг
 function FilterableListOfLeagues() {
   const history = useHistory();
   const location = useLocation();

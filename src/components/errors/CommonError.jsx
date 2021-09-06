@@ -1,5 +1,7 @@
 import React from "react";
 
+// Компонент с общей ошибкой,
+// рендерится на страницах с календарями
 export default function CommonError() {
   return(
     <div>

@@ -70,7 +70,6 @@ function Layout() {
         </div>
       </Router>
     );
-  // }
 }
 
 export default Layout;
